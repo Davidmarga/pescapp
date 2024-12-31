@@ -54,87 +54,195 @@ if ($puntos !== null) {
 }
 
 
-
-
-
-function showpuntuaciones(){
-	$datos=getpuntuacion();
+function procesarPuntuaciones1(){
+	$resultado=array();
+	$datos=getmanga1();
 	if (is_string($datos)){
 		echo $datos;
 	
 	}else{
+		$posicion=1;
 		while ($fila = mysqli_fetch_assoc($datos)){
-			echo "<tr>\n
-			<td> ". $fila ["pescador"] ."</td>\n
-			<td> ". $fila ["manga"] ."</td>\n
-			<td> ". $fila ["puntos"] ."</td>\n
-			</tr>";
+			$fila["posicion"]=$posicion;
+			$resultado[]=$fila;
+			$posicion++;
+			
 		};
 		
+		$acumulada_manga1=array();
+		foreach ($resultado as $pescador) {
+           $acumulada_manga1[$pescador["pescador"]]=$pescador["posicion"]; 
+        }
+		
+// Formateo de la salida original (opcional, si aún lo necesitas)
+foreach ($resultado as $pescador) {
+	echo "Posición: " . $pescador['posicion'] . ", Pescador: " . $pescador['pescador'] . ", Puntos: " . $pescador['puntos'] . "<br>";
+	
 	}
 
 
+  }
+  return $resultado;
+}
 
+function procesarPuntuaciones2(){
+	$resultado=array();
+	$datos=getmanga2();
+	if (is_string($datos)){
+		echo $datos;
+	
+	}else{
+		$posicion=1;
+		while ($fila = mysqli_fetch_assoc($datos)){
+			$fila["posicion"]=$posicion;
+			$resultado[]=$fila;
+			$posicion++;
+			
+		};
+		
+		$acumulada_manga2=array();
+		foreach ($resultado as $pescador) {
+           $acumulada_manga2[$pescador["pescador"]]=$pescador["posicion"]; 
+        }
+		
+// Formateo de la salida original (opcional, si aún lo necesitas)
+foreach ($resultado as $pescador) {
+	echo "Posición: " . $pescador['posicion'] . ", Pescador: " . $pescador['pescador'] . ", Puntos: " . $pescador['puntos'] . "<br>";
+	
+	}
+  }
+  return $resultado;
+}
 
+function procesarPuntuaciones3(){
+	$resultado=array();
+	$datos=getmanga3();
+	if (is_string($datos)){
+		echo $datos;
+	
+	}else{
+		$posicion=1;
+		while ($fila = mysqli_fetch_assoc($datos)){
+			$fila["posicion"]=$posicion;
+			$resultado[]=$fila;
+			$posicion++;
+			
+		};
+		
+		$acumulada_manga3=array();
+		foreach ($resultado as $pescador) {
+           $acumulada_manga3[$pescador["pescador"]]=$pescador["posicion"]; 
+        }
+		
+// Formateo de la salida original (opcional, si aún lo necesitas)
+foreach ($resultado as $pescador) {
+	echo "Posición: " . $pescador['posicion'] . ", Pescador: " . $pescador['pescador'] . ", Puntos: " . $pescador['puntos'] . "<br>";
+	
+	}
+  }
+  return $resultado;
+}
 
+function procesarPuntuaciones4(){
+	$resultado=array();
+	$datos=getmanga4();
+	if (is_string($datos)){
+		echo $datos;
+	
+	}else{
+		$posicion=1;
+		while ($fila = mysqli_fetch_assoc($datos)){
+			$fila["posicion"]=$posicion;
+			$resultado[]=$fila;
+			$posicion++;
+			
+		};
+		
+		$acumulada_manga4=array();
+		foreach ($resultado as $pescador) {
+           $acumulada_manga4[$pescador["pescador"]]=$pescador["posicion"]; 
+        }
+		
+// Formateo de la salida original (opcional, si aún lo necesitas)
+foreach ($resultado as $pescador) {
+	echo "Posición: " . $pescador['posicion'] . ", Pescador: " . $pescador['pescador'] . ", Puntos: " . $pescador['puntos'] . "<br>";
+	
+	}
+  }
+  return $resultado;
 }
 
 
-?>
 
 
-<?php
+// Función interna para procesar los resultados de UNA manga (sin impresión interna)
+function procesarPuntuacionesInterna($datos){
+    $resultado = array();
+    if (is_string($datos)){
+        return array();//Devolver array vacio en caso de error para que no de fallo el resto del codigo
+    }else{
+        $posicion = 1;
+        while ($fila = mysqli_fetch_assoc($datos)){
+            $resultado[] = $fila;
+            $posicion++;
+        }
+        $acumulada = array();
+        foreach ($resultado as $pescador) {
+            $acumulada[$pescador["pescador"]] = array_search($pescador,$resultado)+1;//Calculo de la posicion
+        }
+        return $acumulada;
+    }
+}
 
+function clasiFinal(){
+    $mangas = array(
+        "manga1" => procesarPuntuacionesInterna(getmanga1()),
+        "manga2" => procesarPuntuacionesInterna(getmanga2()),
+        "manga3" => procesarPuntuacionesInterna(getmanga3()),
+        "manga4" => procesarPuntuacionesInterna(getmanga4()),
+    );
 
+    $posiciones_totales = array();
 
-/*		if (anadirNoticia($_POST['titulo'], $_POST['cuerpo'], $_POST['autor'])) {
-			echo "Noticia guardada";
+    // Recorrer los resultados de cada manga y sumar posiciones
+    foreach ($mangas as $manga_resultados) {
+        foreach ($manga_resultados as $pescador => $posicion) {
+            if (isset($posiciones_totales[$pescador])) {
+                $posiciones_totales[$pescador] += $posicion;
+            } else {
+                $posiciones_totales[$pescador] = $posicion;
+            }
+        }
+    }
 
+    $pescadores_en_todas = array();
+    //Filtrar pescadores que estan en las 4 mangas
+    foreach ($posiciones_totales as $pescador => $posicion) {
+        $contador = 0;
+        foreach ($mangas as $manga_resultados) {
+            if (array_key_exists($pescador, $manga_resultados)) {
+                $contador++;
+            }
+        }
+        if ($contador == 4) {
+            $pescadores_en_todas[$pescador] = $posicion;
+        }
 
+    }
 
+    // Ordenar por puntuación (posición total) ascendente
+    asort($pescadores_en_todas);
 
-
-aaaa
+	foreach($pescadores_en_todas as $pescador=>$posicion){
+		echo"<tr>
+		<td>" . $pescador . "</td>
+		<td>" . $posicion . "</td>
+		</tr>";
+	
+	}
+    
 }
 
 ?>
 
-
-
-
-
-
-
-
-
-
-	function showClasificacion() {
-		$datos = getClasificacion();
-		// Si hemos recibido un menasje de error lo mostramos.
-		if (is_string($datos)) {
-			echo $datos;
-		} else { // Si hemos recibido datos
-		// Obtenemos cada una de las filas de datos que nos devolvió la consulta.
-		// mysqli_fetch_assoc avanza entre cada uno de los elementos del array 
-		// que contiene cada vez que se llama, hasta que no haya más, por eso se puede usar en un while.
-			while ($fila = mysqli_fetch_assoc($datos)) {
-				echo "<tr>\n
-						<td>" . $fila["ID"] . "</td>\n
-						<td>" . $fila["nombre"] . "</td>\n
-						<td>" . $fila["puntuacion"] . "</td>\n
-						<td>" . $fila["District"] . "</td>\n
-						<td>" . $fila["Population"] . "</td>\n
-					</tr>";
-			};
-			/*
-			foreach ($datos as $fila) {
-				echo "<tr>\n
-						<td>" . $fila["ID"] . "</td>\n
-						<td>" . $fila["Name"] . "</td>\n
-						<td>" . $fila["CountryCode"] . "</td>\n
-						<td>" . $fila["District"] . "</td>\n
-						<td>" . $fila["Population"] . "</td>\n
-					</tr>";
-			};
-			*/
-            ?>
+<a href="index.php" class="btn btn-primary">Volver al inicio</a>;

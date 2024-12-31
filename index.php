@@ -60,18 +60,32 @@
                             <p><label>Captura9: </label><input type="number" name="9"></p>
                             <p><input type="submit" name="Publicar"></p>
                         </form>
-                        <?php
-                        include ("pescappc.php");
-                        ?>
+                        
+                        <div style="display:none;">
+                        <?php include ("pescappc.php");?>
+                        </div>
+                        
+	                    </table>
+                        <h2> Clasificacion 1º manga</h2>
+                        <?php procesarPuntuaciones1(); ?>
+                        <h2> Clasificacion 2º manga</h2>
+                        <?php procesarPuntuaciones2(); ?>
+                        <h2> Clasificacion 3º manga</h2>
+                        <?php procesarPuntuaciones3(); ?>
+                        <h2> Clasificacion 4º manga</h2>
+                        <?php procesarPuntuaciones4(); ?>
                         <table> 
 		                        <tr>
-			                        <th>pescador</th>
-			                        <th>manga</th>
+			                        <th>pescador--</th>
 			                        <th>puntos</th>
                                 </tr>
+                                <h2> Clasificacion final</h2>
+                                <?php clasiFinal(); ?>
+</table>
+                        
 
-                                <?php showpuntuaciones(); ?>
-	                    </table>
+                      
+
 
                        
 

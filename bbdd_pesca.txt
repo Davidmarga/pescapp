@@ -1,32 +1,9 @@
-CREATE TABLE pescadores (
-nombre VARCHAR(50) PRIMARY KEY);
 
-CREATE TABLE resultados1 (
-    pescador VARCHAR(50) PRIMARY KEY,
-    manga INTEGER,
-    puntos INTEGER,
-    capturas VARCHAR(500),
-    FOREIGN KEY (pescador) REFERENCES pescadores(nombre)
-);
 
-CREATE TABLE resultados2 (
-    pescador VARCHAR(50) PRIMARY KEY,
+CREATE TABLE resultados (
+    
+    pescador VARCHAR(50)PRIMARY KEY ,
     manga INTEGER,
     puntos INTEGER,
     capturas VARCHAR(500),
-    FOREIGN KEY (pescador) REFERENCES pescadores(nombre)
-);
-CREATE TABLE resultados3 (
-    pescador VARCHAR(50) PRIMARY KEY,
-    manga INTEGER,
-    puntos INTEGER,
-    capturas VARCHAR(500),
-    FOREIGN KEY (pescador) REFERENCES pescadores(nombre)
-);
-CREATE TABLE resultados4 (
-    pescador VARCHAR(50) PRIMARY KEY,
-    manga INTEGER,
-    puntos INTEGER,
-    capturas VARCHAR(500),
-    FOREIGN KEY (pescador) REFERENCES pescadores(nombre)
-);
+    );
