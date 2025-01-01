@@ -39,7 +39,7 @@ if ($puntos !== null) {
         for ($i = 1; $i <= 9; $i++) {
 		$capturas[]=isset($_POST[$i])?$_POST[$i]:0;
 	}
-	        $capturas_string = implode("-", $capturas); // Convierte el array a una cadena separada por espacios
+	        $capturas_string = $capturas[0] ."|". $capturas[1] ."|". $capturas[2] ."|". $capturas[3]  . "|". $capturas[4]  ."|". $capturas[5]  ."|". $capturas[6]  ."|". $capturas[7]  ."|". $capturas[8];  // implode("-", $capturas);  // Convierte el array a una cadena separada por espacios
             $manga = [
         "Pescador" => $_POST['Pescador'],
         "Manga" => $_POST["manga"],
@@ -49,7 +49,7 @@ if ($puntos !== null) {
             echo "<pre>"; // Para una mejor visualización del array
     print_r($manga);
     echo "</pre>";
-    guardarManga($_POST['Pescador'],$_POST["manga"],$puntos);
+    guardarManga($_POST['Pescador'],$_POST["manga"],$puntos,$capturas_string);
     } 
 }
 
@@ -76,7 +76,7 @@ function procesarPuntuaciones1(){
 		
 // Formateo de la salida original (opcional, si aún lo necesitas)
 foreach ($resultado as $pescador) {
-	echo "Posición: " . $pescador['posicion'] . ", Pescador: " . $pescador['pescador'] . ", Puntos: " . $pescador['puntos'] . "<br>";
+	echo "Posición: " . $pescador['posicion'] . ", Pescador: " . $pescador['pescador'] . ", Puntos: " . $pescador['puntos'] . ", capturas: " . $pescador["capturas"] . "<br>";
 	
 	}
 
@@ -107,7 +107,7 @@ function procesarPuntuaciones2(){
 		
 // Formateo de la salida original (opcional, si aún lo necesitas)
 foreach ($resultado as $pescador) {
-	echo "Posición: " . $pescador['posicion'] . ", Pescador: " . $pescador['pescador'] . ", Puntos: " . $pescador['puntos'] . "<br>";
+	echo "Posición: " . $pescador['posicion'] . ", Pescador: " . $pescador['pescador'] . ", Puntos: " . $pescador['puntos'] . ", capturas: " . $pescador["capturas"] . "<br>";
 	
 	}
   }
@@ -136,7 +136,7 @@ function procesarPuntuaciones3(){
 		
 // Formateo de la salida original (opcional, si aún lo necesitas)
 foreach ($resultado as $pescador) {
-	echo "Posición: " . $pescador['posicion'] . ", Pescador: " . $pescador['pescador'] . ", Puntos: " . $pescador['puntos'] . "<br>";
+	echo "Posición: " . $pescador['posicion'] . ", Pescador: " . $pescador['pescador'] . ", Puntos: " . $pescador['puntos'] . ", capturas: " . $pescador["capturas"] . "<br>";
 	
 	}
   }
@@ -165,7 +165,7 @@ function procesarPuntuaciones4(){
 		
 // Formateo de la salida original (opcional, si aún lo necesitas)
 foreach ($resultado as $pescador) {
-	echo "Posición: " . $pescador['posicion'] . ", Pescador: " . $pescador['pescador'] . ", Puntos: " . $pescador['puntos'] . "<br>";
+	echo "Posición: " . $pescador['posicion'] . ", Pescador: " . $pescador['pescador'] . ", Puntos: " . $pescador['puntos'] . ", capturas: " . $pescador["capturas"] ."<br>";
 	
 	}
   }
